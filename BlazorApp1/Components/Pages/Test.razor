@@ -1,0 +1,11 @@
+﻿@page "/test"
+
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Policy = "AuthenticatedUser")]
+
+
+<h3>Test</h3>
+
+@code {
+
+}

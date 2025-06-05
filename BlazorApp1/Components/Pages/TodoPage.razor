@@ -1,0 +1,120 @@
+﻿@page "/Todo"
+@using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
+@using BlazorApp1.Data
+@using BlazorApp1.Data.Context
+@using BlazorApp1.Data.Models
+@using BlazorApp1.Encryption
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.WebUtilities
+@rendermode InteractiveServer
+@attribute [Authorize(Policy = "AuthenticatedUser")]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject TodoDbContext TodoDbContext
+@inject NavigationManager NavManager
+@inject IAsymmetricEncryptionService AsymEncryption
+
+<h3>To do list</h3>
+
+@if (!string.IsNullOrEmpty(statusMessage))
+{
+    <div class="alert alert-success">@statusMessage</div>
+}
+
+<div>
+    <label>Add to-do item: </label>
+    <input @bind="newItem" />
+    <button @onclick="AddItem">Submit</button>
+</div>
+
+<p>My to do items</p>
+<table class="table">
+    @if (TodoItems != null && TodoItems.Any())
+    {
+        @foreach (var todo in TodoItems)
+        {
+            <tr>
+                <td>@AsymEncryption.Decrypt(Convert.FromBase64String(todo.Item))</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td>No items.</td>
+        </tr>
+    }
+</table>
+
+@code {
+    private string newItem = string.Empty;
+    private List<Todo> TodoItems = new List<Todo>();
+    private int currentUserId;
+    private string statusMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Parse query parameters to check for validation status.
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        var query = QueryHelpers.ParseQuery(uri.Query);
+        // Quick bool to get validation status of query
+        bool cameValidated = query.TryGetValue("status", out var status) && status == "validated";
+        if (cameValidated)
+        {
+            statusMessage = "Validation have succeeded. ";
+        }
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user?.Identity?.Name is null)
+        {
+            NavManager.NavigateTo("/login");
+            return;
+        }
+        var userName = user.Identity.Name;
+
+        var cpr = await TodoDbContext.CprNrList
+                    .Include(c => c.TodoList)
+                    .FirstOrDefaultAsync(x => x.User == userName);
+
+        if (cpr == null)
+        {
+            NavManager.NavigateTo("/cpr/register");
+            return;
+        }
+
+        if (!cameValidated)
+        {
+            NavManager.NavigateTo("/cpr/validate");
+            return;
+        }
+
+        // Load the to-do items for the validated CPR record.
+        currentUserId = cpr.Id;
+        TodoItems = cpr.TodoList;
+    }
+
+    private async Task AddItem()
+    {
+        if (!string.IsNullOrWhiteSpace(newItem))
+        {
+            string encryptedItem = await AsymEncryption.EncryptTodoViaApiAsync(newItem);
+
+            var newTodo = new Todo
+                {
+                    Item = encryptedItem,
+                    UserId = currentUserId
+                };
+
+            TodoDbContext.ToDoList.Add(newTodo);
+            await TodoDbContext.SaveChangesAsync();
+
+            newItem = string.Empty;
+
+            TodoItems = await TodoDbContext.ToDoList
+                            .Where(t => t.UserId == currentUserId)
+                            .ToListAsync();
+        }
+    }
+}

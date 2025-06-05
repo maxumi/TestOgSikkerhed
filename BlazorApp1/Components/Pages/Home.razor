@@ -1,0 +1,57 @@
+﻿@page "/"
+
+@using BlazorApp1.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Policy = "AuthenticatedUser")]
+
+@inject IServiceProvider _serviceProvider
+@inject UserManager<ApplicationUser> _userManager
+
+
+<PageTitle>Home</PageTitle>
+
+
+<AuthorizeView>
+    <Authorized>
+        <h1>Du er logget ind.</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Du er IKKE logget ind.</h1>
+    </NotAuthorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <h1>Du er Admin.</h1>
+    </Authorized>
+</AuthorizeView>
+
+
+@code{
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CreateUserRole("test5@gmail.com", "Admin");
+    }
+
+    private async Task CreateUserRole(string userEmail, string role)
+    {
+        var roleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        var roleExists = await roleManager.RoleExistsAsync(role);
+        if (!roleExists)
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+
+        ApplicationUser? identityUser = await _userManager.FindByEmailAsync(userEmail);
+        if (identityUser != null)
+        {
+            if (!await _userManager.IsInRoleAsync(identityUser, role))
+            {
+                await _userManager.AddToRoleAsync(identityUser, role);
+            }
+        }
+    }
+}

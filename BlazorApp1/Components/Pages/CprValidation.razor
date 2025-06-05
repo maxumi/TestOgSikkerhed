@@ -1,0 +1,103 @@
+﻿@page "/cpr/validate"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authorization
+@using Data.Models
+@using BlazorApp1.Data.Context
+@rendermode InteractiveServer
+@attribute [Authorize(Policy = "AuthenticatedUser")]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject TodoDbContext TodoDbContext
+@inject NavigationManager NavManager
+@inject IHashingHandler HashingHandler
+
+<h3>Validate CPR NR.</h3>
+
+<AuthorizeView>
+    <Authorized Context="authContext">
+        <form @onsubmit:preventDefault="true" @onsubmit="HandleValidation">
+            <div class="mb-3">
+                <label for="user" class="form-label">User:</label>
+                <input id="user" class="form-control" value="@authContext.User.Identity?.Name" readonly />
+            </div>
+            <div class="mb-3">
+                <label for="cpr" class="form-label">CPR-nr:</label>
+                <input id="cpr" class="form-control" type="text" @bind="Model.CprNr" />
+            </div>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="mb-3 text-danger">@errorMessage</div>
+            }
+            <button type="submit" class="btn btn-primary">Validate</button>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized to view this page.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private CprModel Model = new CprModel();
+    private string errorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = authState.User.Identity?.Name;
+
+        if (string.IsNullOrEmpty(userName))
+        {
+            NavManager.NavigateTo("/login");
+            return;
+        }
+
+        if (!TodoDbContext.CprNrList.Any(record => record.User == userName))
+        {
+            // Not Registered
+            NavManager.NavigateTo("/cpr/register");
+        }
+    }
+
+    private async Task HandleValidation()
+    {
+        errorMessage = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(Model.CprNr))
+        {
+            errorMessage = "CPR number is required.";
+            return;
+        }
+
+        var regex = new System.Text.RegularExpressions.Regex(@"^\d{6}-?\d{4}$");
+        if (!regex.IsMatch(Model.CprNr))
+        {
+            errorMessage = "CPR is wrong.";
+            return;
+        }
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = authState.User.Identity?.Name ?? "Unknown";
+
+        var record = TodoDbContext.CprNrList.FirstOrDefault(r => r.User == userName);
+        if (record == null)
+        {
+            errorMessage = "No registration found. Please register first.";
+            return;
+        }
+
+        bool isValid = HashingHandler.VerifyBCrypt2(Model.CprNr, record.CprNum);
+        if (!isValid)
+        {
+            errorMessage = "The entered CPR number does not match our records.";
+            return;
+        }
+
+        NavManager.NavigateTo("/Todo?status=validated");
+    }
+
+    public class CprModel
+    {
+        [Required(ErrorMessage = "CPR number is required.")]
+        [RegularExpression(@"^\d{6}-?\d{4}$", ErrorMessage = "CPR is wrong.")]
+        public string CprNr { get; set; }
+    }
+}
