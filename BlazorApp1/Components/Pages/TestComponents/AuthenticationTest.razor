@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthStateProvider
+
+@if (!_isAuthenticated)
+{
+    <p>Sorry but you are not Authenticated</p>
+}
+else
+{
+    <p>Welcome, You are logged in</p>
+}
+
+@code {
+    private bool _isAuthenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthStateProvider.GetAuthenticationStateAsync();
+        _isAuthenticated = state.User.Identity.IsAuthenticated;
+    }
+
+	public string? GetUserName()
+	{
+		var state = AuthStateProvider.GetAuthenticationStateAsync().Result;
+		return state.User.Identity.IsAuthenticated ? state.User.Identity.Name : null;
+	}
+}

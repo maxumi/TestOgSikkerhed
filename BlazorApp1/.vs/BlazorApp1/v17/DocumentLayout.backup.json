@@ -1,9 +1,20 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\PC18\\Desktop\\Skole\\serverside_3_fag\\kestrel\\BlazorApp1\\",
+  "WorkspaceRootPath": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{52FA9B77-E9C1-4C60-8A14-02DDE44C85DC}|..\\WebApi\\WebApi.csproj|c:\\users\\pc18\\desktop\\skole\\serverside_3_fag\\kestrel\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5F02B306-26FC-88B4-9AEC-F3F4762948E0}|..\\BlazorApp1.Test\\BlazorApp1.Test.csproj|c:\\users\\pc18\\documents\\github\\testogsikkerhed\\blazorapp1.test\\authorizationtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{904D36D8-414C-4C34-98AB-E886C1C46FA4}|BlazorApp1.csproj|c:\\users\\pc18\\documents\\github\\testogsikkerhed\\blazorapp1\\components\\pages\\testcomponents\\adminpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{904D36D8-414C-4C34-98AB-E886C1C46FA4}|BlazorApp1.csproj|solutionrelative:components\\pages\\testcomponents\\adminpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{904D36D8-414C-4C34-98AB-E886C1C46FA4}|BlazorApp1.csproj|c:\\users\\pc18\\documents\\github\\testogsikkerhed\\blazorapp1\\components\\pages\\testcomponents\\authenticationtest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{904D36D8-414C-4C34-98AB-E886C1C46FA4}|BlazorApp1.csproj|solutionrelative:components\\pages\\testcomponents\\authenticationtest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F02B306-26FC-88B4-9AEC-F3F4762948E0}|..\\BlazorApp1.Test\\BlazorApp1.Test.csproj|c:\\users\\pc18\\documents\\github\\testogsikkerhed\\blazorapp1.test\\authenticationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -13,19 +24,58 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthenticationTest.razor",
+              "DocumentMoniker": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1\\Components\\Pages\\TestComponents\\AuthenticationTest.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\TestComponents\\AuthenticationTest.razor",
+              "ToolTip": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1\\Components\\Pages\\TestComponents\\AuthenticationTest.razor",
+              "RelativeToolTip": "Components\\Pages\\TestComponents\\AuthenticationTest.razor",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-06T08:34:13.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AdminPage.razor",
+              "DocumentMoniker": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1\\Components\\Pages\\TestComponents\\AdminPage.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\TestComponents\\AdminPage.razor",
+              "ToolTip": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1\\Components\\Pages\\TestComponents\\AdminPage.razor",
+              "RelativeToolTip": "Components\\Pages\\TestComponents\\AdminPage.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-06T08:24:30.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\PC18\\Desktop\\Skole\\serverside_3_fag\\kestrel\\WebApi\\Program.cs",
-              "RelativeDocumentMoniker": "..\\WebApi\\Program.cs",
-              "ToolTip": "C:\\Users\\PC18\\Desktop\\Skole\\serverside_3_fag\\kestrel\\WebApi\\Program.cs",
-              "RelativeToolTip": "..\\WebApi\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "AuthorizationTest.cs",
+              "DocumentMoniker": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1.Test\\AuthorizationTest.cs",
+              "RelativeDocumentMoniker": "..\\BlazorApp1.Test\\AuthorizationTest.cs",
+              "ToolTip": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1.Test\\AuthorizationTest.cs",
+              "RelativeToolTip": "..\\BlazorApp1.Test\\AuthorizationTest.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAApwDQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T06:57:03.027Z",
+              "WhenOpened": "2025-06-06T08:22:33.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthenticationTests.cs",
+              "DocumentMoniker": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1.Test\\AuthenticationTests.cs",
+              "RelativeDocumentMoniker": "..\\BlazorApp1.Test\\AuthenticationTests.cs",
+              "ToolTip": "C:\\Users\\PC18\\Documents\\GitHub\\TestOgSikkerhed\\BlazorApp1.Test\\AuthenticationTests.cs",
+              "RelativeToolTip": "..\\BlazorApp1.Test\\AuthenticationTests.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBoAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T08:16:41.839Z",
               "EditorCaption": ""
             }
           ]
