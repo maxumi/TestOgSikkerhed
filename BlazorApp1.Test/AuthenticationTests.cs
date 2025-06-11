@@ -21,7 +21,7 @@ namespace BlazorApp1.Test
             // Act
             var cut = RenderComponent<AuthenticationTest>();
 
-            // Assert (view)
+            // Assert
             Assert.Contains("Sorry but you are not Authenticate", cut.Markup);
         }
         [Fact]
@@ -36,7 +36,7 @@ namespace BlazorApp1.Test
             var result = cut.Instance.GetUserName();
 
 
-            // Assert (code)
+            // Assert
             Assert.Null(result);
         }
 
@@ -50,7 +50,7 @@ namespace BlazorApp1.Test
             // Act
             var cut = RenderComponent<AuthenticationTest>();
 
-            // Assert (view)
+            // Assert
             Assert.Contains("Welcome, You are logged in", cut.Markup);
         }
 
@@ -65,7 +65,7 @@ namespace BlazorApp1.Test
             var cut = RenderComponent<AuthenticationTest>();
             var result = cut.Instance.GetUserName();
 
-            // Assert (view)
+            // Assert
             Assert.Equal("user@example.com", result);
         }
     }
